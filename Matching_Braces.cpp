@@ -9,13 +9,13 @@
 //  was quite ugly.                                                                                                //
 //  std::stringhe very next day I learned what a stack was. And so:                                                           */
 
-class StringStack
+class CharStack
 {
     class Node
     {
         public:
             Node* next;
-            std::string value;
+            char value;
             operator= (Node* other)
             {
                 this->value = other->value;
@@ -28,7 +28,7 @@ class StringStack
     int stack_size = 0;
 
     public:
-        void push(std::string item)
+        void push(char item)
         {
             Node* new_head = new Node;
             new_head->value = item;
@@ -42,7 +42,7 @@ class StringStack
             return stack_size == 0;
         }
 
-        std::string peek()
+        char peek()
         {
             return this->head->value;
         }
@@ -65,9 +65,9 @@ class StringStack
 
 bool isBalanced(std::string braces)
 {
-     BraceStack<std::string> b_stack;
+     CharStack b_stack;
 
-     for(int i = 0; i < braces.length; ++i)
+     for(int i = 0; i < braces.length(); ++i)
      {
          switch(braces[i])
          {
@@ -77,7 +77,7 @@ bool isBalanced(std::string braces)
                 b_stack.push(braces[i]);
                 break;
             case '}':
-                if(!b_stack.peek().equals("{"))
+                if(!(b_stack.peek() == '{'))
                 {
                     return false;
                 }
@@ -87,7 +87,7 @@ bool isBalanced(std::string braces)
                 }
                 break;
             case ']':
-                if(!b_stack.peek().equals("["))
+                if(!(b_stack.peek() == '['))
                 {
                     return false;
                 }
@@ -97,7 +97,7 @@ bool isBalanced(std::string braces)
                 }
                 break;
             case ')':
-                if(!b_stack.peek().equals("("))
+                if(!(b_stack.peek() == '('))
                 {
                     return false;
                 }
@@ -122,8 +122,10 @@ bool isBalanced(std::string braces)
 
 int main()
 {
-
+    std::cout << isBalanced("[{}]") << "\n";            //Prints 1
+    std::cout << isBalanced("[{]}") << "\n";            //Prints 0
+    std::cout << isBalanced("[{(){}}]()()") << "\n";    //Prints 1
 }
 
-
-/* And so I've learned: if I want to make a generic template of a stack using a linked list, do it in Java and not C++ */
+/* And so I've learned: if you want to make a generic template of a stack using a linked list, do it in Java and not C++, //
+// or at least use a vector based stack instead.                                                                          */
